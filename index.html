@@ -4,8 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kushagra Lal — Automotive Electronics</title>
-<meta name="description" content="Kushagra Lal — Automobile Engineering student specializing in Automotive Electronics. Powertrain Head, Team 1.618 Formula Student.">
+<meta name="description" content="Kushagra Lal — Automobile Engineering student specializing in Automotive Electronics. Team Principal, Team 1.618 Formula Student.">
+
+<!-- Social sharing. NOTE: og:image must be an ABSOLUTE URL to work on LinkedIn/WhatsApp.
+     Add it once your site URL is final, e.g.:
+     <meta property="og:image" content="https://<your-username>.github.io/<repo>/assets/img/01-workshop-build.jpg"> -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kushagra Lal — Automotive Electronics">
+<meta property="og:description" content="Automobile Engineering student specializing in Automotive Electronics. Team Principal, Team 1.618 Formula Student.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0b0d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0b0d'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%23ff007f' stroke-width='4'/%3E%3Ctext x='32' y='40' font-family='Arial' font-weight='700' font-size='22' text-anchor='middle' fill='%23ff007f'%3EKL%3C/text%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -83,12 +95,12 @@
   @keyframes spin{ to{ transform:rotate(360deg); } }
   .nav-links{ display:flex; gap:34px; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; }
   .nav-links a{ color:var(--muted); position:relative; padding:4px 0; transition:color .25s; }
-  .nav-links a:hover, .nav-links a:focus-visible{ color:var(--text); outline:none; }
+  .nav-links a:hover, .nav-links a:focus-visible, .nav-links a.active{ color:var(--text); outline:none; }
   .nav-links a::after{
     content:''; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--ice);
     transition:width .25s;
   }
-  .nav-links a:hover::after{ width:100%; }
+  .nav-links a:hover::after, .nav-links a.active::after{ width:100%; }
   .nav-cta{
     font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
     border:1px solid var(--ev); color:var(--ev); padding:9px 18px; border-radius:2px;
@@ -144,11 +156,13 @@
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
     background:var(--surface); overflow:hidden; position:relative; z-index:1;
   }
+  /* padding-right (not gap) on each item keeps the -50% loop seamless */
   .ticker-track{
-    display:flex; gap:60px; white-space:nowrap; padding:14px 0;
+    display:flex; white-space:nowrap; padding:14px 0; width:max-content;
     animation:tickerScroll 26s linear infinite;
     font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.05em; color:var(--muted);
   }
+  .ticker-track span{ padding-right:60px; }
   .ticker-track span b{ color:var(--ev); font-weight:600; }
   @keyframes tickerScroll{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
 
@@ -156,15 +170,15 @@
   .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; }
   .about-grid p{ color:var(--muted); font-size:16px; margin-bottom:16px; max-width:520px; }
   .about-grid p strong{ color:var(--text); font-weight:600; }
-  .stats{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
-  .stat{ background:var(--surface); padding:26px 22px; }
+  .stats{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .stat{ background:var(--surface); padding:26px 22px; border:1px solid var(--line); }
   .stat-num{ font-family:'Rajdhani',sans-serif; font-weight:700; font-size:38px; color:var(--ev); line-height:1; }
   .stat-label{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted-2); margin-top:8px; letter-spacing:0.05em; text-transform:uppercase; }
 
   /* ===== SKILLS ===== */
   .duality-note{ color:var(--muted); max-width:640px; margin-bottom:50px; font-size:16px; }
-  .skills-split{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
-  .skill-col{ background:var(--surface); padding:36px; }
+  .skills-split{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .skill-col{ background:var(--surface); padding:36px; border:1px solid var(--line); }
   .skill-col.ice .skill-col-title{ color:var(--ice); }
   .skill-col.ev .skill-col-title{ color:var(--ev); }
   .skill-col-title{ font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.15em; margin-bottom:22px; text-transform:uppercase; }
@@ -178,15 +192,17 @@
   .skill-col.ev .pill:hover{ border-color:var(--ev); color:var(--ev); }
 
   /* ===== GARAGE / PROJECTS ===== */
-  .garage-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
-  .card{ background:var(--surface); padding:30px; display:flex; flex-direction:column; min-height:340px; }
-  .card-tag{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; padding:5px 10px; border-radius:2px; width:fit-content; margin-bottom:18px; text-transform:uppercase; }
+  .garage-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .card{ background:var(--surface); padding:26px 30px; display:flex; flex-direction:column; border:1px solid var(--line); }
+  .card-tag{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; padding:5px 10px; border-radius:2px; width:fit-content; margin-bottom:16px; text-transform:uppercase; }
   .tag-done{ background:rgba(0,217,192,0.12); color:var(--ev); border:1px solid var(--ev-dim); }
   .tag-progress{ background:rgba(255,0,127,0.12); color:var(--ice); border:1px solid var(--ice-dim); }
   .card h3{ font-size:22px; margin-bottom:10px; letter-spacing:0.01em; }
   .card p{ color:var(--muted); font-size:14.5px; flex-grow:1; }
-  .card-specs{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted-2); display:flex; flex-direction:column; gap:6px; }
+  .card-specs{ margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted-2); display:flex; flex-direction:column; gap:6px; }
   .card-specs b{ color:var(--muted); }
+  .card-specs a{ color:var(--ev); border-bottom:1px solid var(--ev-dim); transition:.2s; }
+  .card-specs a:hover, .card-specs a:focus-visible{ color:var(--text); border-color:var(--ice); outline:none; }
 
   /* ===== TEAM 1.618 ===== */
   .team-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
@@ -196,6 +212,7 @@
 
   /* ===== COLD START — SCROLL-PINNED GROW ===== */
   .scroll-pin-wrap{ position:relative; z-index:1; padding:0; }
+  section.scroll-pin-wrap{ padding:0; }
   .scroll-pin-spacer{ position:relative; height:280vh; }
   .scroll-pin-sticky{
     position:sticky; top:0; height:100vh; width:100%; overflow:hidden;
@@ -241,6 +258,15 @@
     transition:border-color .2s, background .2s;
   }
   .sound-toggle:hover{ border-color:var(--ice); }
+  .sound-hint{
+    position:absolute; left:50%; bottom:28px; transform:translateX(-50%); z-index:5;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff; background:rgba(255,0,127,.85); padding:9px 16px; border-radius:2px;
+    box-shadow:0 0 24px rgba(255,0,127,.55); pointer-events:none;
+    opacity:0; transition:opacity .3s; white-space:nowrap;
+  }
+  .sound-hint.show{ opacity:1; animation:hintPulse 1.6s ease-in-out infinite; }
+  @keyframes hintPulse{ 0%,100%{ transform:translateX(-50%) scale(1); } 50%{ transform:translateX(-50%) scale(1.06); } }
   .pin-progress-bar{
     position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--line); z-index:4;
   }
@@ -261,7 +287,7 @@
   .slide-controls{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; }
   .slide-btn{ background:var(--surface-2); border:1px solid var(--line); color:var(--text); width:40px; height:40px; border-radius:2px; cursor:pointer; font-size:16px; transition:.2s; }
   .slide-btn:hover{ border-color:var(--ev); color:var(--ev); }
-  .slide-dots{ display:flex; gap:8px; }
+  .slide-dots{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
   .slide-dot{ width:8px; height:8px; border-radius:50%; background:var(--line); cursor:pointer; border:none; padding:0; transition:.2s; }
   .slide-dot.active{ background:var(--ice); width:22px; border-radius:4px; }
 
@@ -285,6 +311,39 @@
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
 
+
+  /* ===== SCROLL SCENES (pin + scrub) =====
+     Default (no JS / mobile / reduced motion): normal flowing page.
+     html.fx-pin: every .scene becomes a tall spacer with a sticky 100vh stage,
+     and the elements inside are scrubbed by scroll position. */
+  .scene{ position:relative; z-index:1; padding:90px 8vw; }
+  .stage-inner{ width:100%; transform-origin:50% 50%; }
+  .hero.scene{ min-height:100vh; display:flex; align-items:center; padding:70px 8vw 0; }
+  .hero.scene .stage{ width:100%; }
+  .fx-pin .scene{ height:calc(var(--len,220) * 1vh); padding:0; }
+  .fx-pin .hero.scene{ display:block; min-height:0; padding:0; }
+  .fx-pin .stage{
+    position:sticky; top:0; height:100vh; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    padding:84px 8vw 24px;
+  }
+  .fx-pin .stage-inner{ will-change:transform, opacity; }
+  [data-fx]{ will-change:transform, opacity; }
+  .fx-off [data-fx], .fx-flat [data-fx]{ will-change:auto; }
+
+  /* top scroll progress + speed streaks */
+  .scroll-progress{ position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,var(--ice),var(--ev)); z-index:200; pointer-events:none; box-shadow:0 0 12px rgba(255,0,127,.7); }
+  .speed{ position:fixed; inset:0; z-index:2; pointer-events:none; opacity:0; }
+  .speed::before, .speed::after{
+    content:''; position:absolute; inset:0;
+    -webkit-mask-image:repeating-linear-gradient(180deg,#000 0,#000 140px,transparent 140px,transparent 340px);
+            mask-image:repeating-linear-gradient(180deg,#000 0,#000 140px,transparent 140px,transparent 340px);
+    -webkit-mask-position:0 var(--sy,0px); mask-position:0 var(--sy,0px);
+  }
+  .speed::before{ background:linear-gradient(90deg,transparent calc(100% - 1px),rgba(255,0,127,.8) 0) 0 0/97px 100%; }
+  .speed::after{ background:linear-gradient(90deg,transparent calc(100% - 1px),rgba(0,217,192,.55) 0) 0 0/173px 100%;
+    -webkit-mask-position:0 calc(var(--sy,0px) * 1.35 + 90px); mask-position:0 calc(var(--sy,0px) * 1.35 + 90px); }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width:900px){
     .hero-grid{ grid-template-columns:1fr; }
@@ -294,6 +353,8 @@
     .nav-links, .nav-cta{ display:none; }
     .hamburger{ display:flex; }
     section{ padding:70px 6vw; }
+    .scene{ padding:70px 6vw; }
+    .hero.scene{ padding:90px 6vw 40px; }
     .scroll-pin-spacer{ height:220vh; }
     .pin-media{ width:88vw; }
   }
@@ -309,6 +370,8 @@
 <body>
 
 <div class="blueprint"></div>
+<div class="speed" id="speed"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <nav>
   <a href="#top" class="logo"><span class="logo-badge">KL</span> KUSHAGRA&nbsp;LAL</a>
@@ -321,7 +384,7 @@
     <a href="#certifications">Certifications</a>
   </div>
   <a href="#contact" class="nav-cta">Contact</a>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">About</a>
@@ -333,23 +396,25 @@
   <a href="#contact">Contact</a>
 </div>
 
-<header class="hero" id="top">
+<header class="hero scene" id="top" style="--len:170">
+ <div class="stage"><div class="stage-inner">
   <div class="hero-grid">
-    <div>
+    <div data-fx="outleft" data-s="0.08" data-e="0.85">
       <div class="kicker mono">AUTOMOBILE ENGINEERING · AUTOMOTIVE ELECTRONICS</div>
       <h1>KUSHAGRA<br><em>LAL</em></h1>
-      <p class="hero-sub">Powertrain Head at Team 1.618, Formula Student. I work where the mechanical
-        drivetrain meets the electronics that control it — wiring harnesses, quick-shift ECUs, embedded
-        firmware, and the sensors in between.</p>
+      <p class="hero-sub">Team Principal at Team 1.618, Formula Student — previously Media Head and
+        Powertrain Head. I work where the mechanical drivetrain meets the electronics that control it —
+        wiring harnesses, quick-shift ECUs, embedded firmware, and the sensors in between.</p>
       <div class="hero-actions">
         <a href="#garage" class="btn btn-primary">View the Garage →</a>
         <a href="assets/KUSHAGRA_LAL_CV.pdf" class="btn btn-ghost" target="_blank" rel="noopener">Download CV</a>
       </div>
     </div>
 
+    <div data-fx="outright" data-s="0.08" data-e="0.85">
     <div class="cluster">
       <div class="gauge-wrap">
-        <svg viewBox="0 0 420 260" width="100%">
+        <svg viewBox="0 0 420 260" width="100%" role="img" aria-label="Decorative RPM gauge reading Ready, systems nominal">
           <defs>
             <linearGradient id="redlineGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stop-color="#ff007f" stop-opacity="0"/>
@@ -379,61 +444,66 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
+ </div></div>
 </header>
 
-<div class="ticker-bar">
+<div class="ticker-bar" aria-hidden="true">
   <div class="ticker-track">
     <span><b>CGPA</b> 6.18/10</span>
-    <span><b>ROLE</b> Powertrain Head — Team 1.618</span>
+    <span><b>ROLE</b> Team Principal — Team 1.618</span>
     <span><b>QUICK-SHIFTER CUT WINDOW</b> 0.65–0.85 ms</span>
     <span><b>PLATFORM</b> ESP32 · STM32 · Arduino IDE</span>
-    <span><b>PROTOCOLS</b> CAN · LIN · AUTOSAR · ADAS</span>
+    <span><b>PROTOCOLS</b> CAN · LIN · SPI · AUTOSAR · ADAS</span>
     <span><b>BASE</b> Jamnagar, Gujarat</span>
     <span><b>CGPA</b> 6.18/10</span>
-    <span><b>ROLE</b> Powertrain Head — Team 1.618</span>
+    <span><b>ROLE</b> Team Principal — Team 1.618</span>
     <span><b>QUICK-SHIFTER CUT WINDOW</b> 0.65–0.85 ms</span>
     <span><b>PLATFORM</b> ESP32 · STM32 · Arduino IDE</span>
-    <span><b>PROTOCOLS</b> CAN · LIN · AUTOSAR · ADAS</span>
+    <span><b>PROTOCOLS</b> CAN · LIN · SPI · AUTOSAR · ADAS</span>
     <span><b>BASE</b> Jamnagar, Gujarat</span>
   </div>
 </div>
 
-<section id="about">
+<section id="about" class="scene" style="--len:240">
+ <div class="stage"><div class="stage-inner">
   <div class="container">
-    <div class="eyebrow">About</div>
-    <h2 class="section-title reveal">Two systems. One engineer.</h2>
+    <div class="eyebrow" data-fx="up" data-s="0" data-e="0.12">About</div>
+    <h2 class="section-title" data-fx="grow" data-from="0.3" data-blur="1" data-s="0" data-e="0.25">Two systems. One engineer.</h2>
     <div class="about-grid">
-      <div class="reveal">
+      <div data-stagger="0.15,0.6,left">
         <p>I'm an <strong>Automobile Engineering</strong> student at <strong>SRM Institute of Science and
           Technology</strong>, specializing in <strong>Automotive Electronics</strong>. I move between two
           worlds that are increasingly the same vehicle: the mechanical side — chassis, powertrains, wiring —
           and the electronics side — microcontrollers, sensors, and the buses that let them talk to each other.</p>
-        <p>As <strong>Powertrain Head</strong> at Team 1.618 (Team Golden Ratio), I work Formula Student
-          builds from the chassis floor to the ECU. Outside the team, I'm usually deep in a personal build —
-          currently a holographic music/weather display running on an ESP32.</p>
+        <p>As <strong>Team Principal</strong> at Team 1.618 (Team Golden Ratio) — after stints as Media Head
+          and Powertrain Head — I work Formula Student builds from the chassis floor to the ECU. Outside the team, I'm usually deep in a personal build —
+          most recently an RFID keyless ignition for a scooter, and a holographic music/weather display running on an ESP32.</p>
       </div>
-      <div class="stats reveal">
+      <div class="stats" data-stagger="0.3,0.8,grow,0.3">
         <div class="stat"><div class="stat-num">6.18</div><div class="stat-label">CGPA / 10</div></div>
-        <div class="stat"><div class="stat-num">2+</div><div class="stat-label">Major Projects Shipped</div></div>
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">Major Projects Shipped</div></div>
         <div class="stat"><div class="stat-num">0.65<span style="font-size:20px;">ms</span></div><div class="stat-label">Fastest Ignition Cut</div></div>
         <div class="stat"><div class="stat-num">7</div><div class="stat-label">Certifications</div></div>
       </div>
     </div>
   </div>
+ </div></div>
 </section>
 
-<section id="skills">
+<section id="skills" class="scene" style="--len:250">
+ <div class="stage"><div class="stage-inner">
   <div class="container">
-    <div class="eyebrow">Skill Set</div>
-    <h2 class="section-title reveal">The same split as a hybrid powertrain.</h2>
-    <p class="duality-note reveal">An HEV runs a combustion engine and an electric motor side by side — each
+    <div class="eyebrow" data-fx="up" data-s="0" data-e="0.1">Skill Set</div>
+    <h2 class="section-title" data-fx="grow" data-from="0.3" data-blur="1" data-s="0" data-e="0.22">The same split as a hybrid powertrain.</h2>
+    <p class="duality-note" data-fx="up" data-s="0.1" data-e="0.3">An HEV runs a combustion engine and an electric motor side by side — each
       doing what it's best at. My skill set is built the same way: mechanical design and hands-on hardware on
       one side, embedded electronics and code on the other, working together on the same build.</p>
-    <div class="skills-split reveal">
-      <div class="skill-col ice">
+    <div class="skills-split">
+      <div class="skill-col ice" data-fx="left" data-s="0.2" data-e="0.5">
         <div class="skill-col-title">// Mechanical & Hardware</div>
-        <div class="pill-group">
+        <div class="pill-group" data-stagger="0.4,0.85,zoom,1.8">
           <span class="pill">SolidWorks</span>
           <span class="pill">AutoCAD</span>
           <span class="pill">ANSYS</span>
@@ -444,14 +514,15 @@
           <span class="pill">3D Mechanical Design</span>
         </div>
       </div>
-      <div class="skill-col ev">
+      <div class="skill-col ev" data-fx="right" data-s="0.2" data-e="0.5">
         <div class="skill-col-title">// Electronics & Firmware</div>
-        <div class="pill-group">
+        <div class="pill-group" data-stagger="0.45,0.9,zoom,1.8">
           <span class="pill">ESP32 / ESP-IDF</span>
           <span class="pill">STM32</span>
           <span class="pill">Arduino IDE</span>
           <span class="pill">CAN Bus</span>
           <span class="pill">LIN Bus</span>
+          <span class="pill">SPI · RFID</span>
           <span class="pill">AUTOSAR</span>
           <span class="pill">ADAS</span>
           <span class="pill">Python · MATLAB</span>
@@ -459,22 +530,38 @@
       </div>
     </div>
   </div>
+ </div></div>
 </section>
 
-<section id="garage">
+<section id="garage" class="scene" style="--len:300">
+ <div class="stage"><div class="stage-inner">
   <div class="container">
-    <div class="eyebrow">Projects</div>
-    <h2 class="section-title reveal">The Garage</h2>
-    <div class="garage-grid reveal">
+    <div class="eyebrow" data-fx="up" data-s="0" data-e="0.1">Projects</div>
+    <h2 class="section-title" data-fx="grow" data-from="0.3" data-blur="1" data-s="0" data-e="0.2">The Garage</h2>
+    <div class="garage-grid" data-stagger="0.15,0.85,grow,0.2">
       <div class="card">
-        <div class="card-tag tag-progress">In Progress</div>
+        <div class="card-tag tag-done">Shipped</div>
+        <h3>RFID Keyless Ignition &amp; Security System</h3>
+        <p>Replaced the mechanical key of a 12V scooter with RFID authentication using an Arduino Uno and
+          MFRC522 reader. Tag UIDs are verified over SPI against an authorized list stored in flash memory
+          before the ignition is powered.</p>
+        <div class="card-specs">
+          <div><b>Period:</b> Oct 2026 – Nov 2026</div>
+          <div><b>Stack:</b> Arduino Uno, MFRC522, SPI</div>
+          <div><b>Protection:</b> Fuse, reverse-polarity diode, capacitor, 12V→5V buck converter</div>
+          <!-- TODO: replace the href below with the exact repo URL for this project -->
+          <div><b>Source:</b> <a href="https://github.com/Ghost3019" target="_blank" rel="noopener">GitHub Repository ↗</a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-tag tag-done">Shipped</div>
         <h3>Holographic Music / Weather Display</h3>
         <p>An ESP32-WROOM-32 driving an SSD1306 OLED, synced live to Apple Music / Spotify through a Python
           relay script running on a Mac. Rendered as a faux-holographic HUD.</p>
         <div class="card-specs">
           <div><b>MCU:</b> ESP32-WROOM-32</div>
           <div><b>Display:</b> SSD1306, 128×64, I2C</div>
-          <div><b>Next:</b> GPIO0 screen-cycle button, marquee text, fade transitions</div>
+          <div><b>Source:</b> Apple Music / Spotify via Python relay on Mac</div>
         </div>
       </div>
       <div class="card">
@@ -501,31 +588,35 @@
       </div>
     </div>
   </div>
+ </div></div>
 </section>
 
-<section id="team">
+<section id="team" class="scene" style="--len:270">
+ <div class="stage"><div class="stage-inner">
   <div class="container">
-    <div class="eyebrow">Formula Student</div>
-    <h2 class="section-title reveal">Team 1.618 — Team Golden Ratio</h2>
+    <div class="eyebrow" data-fx="up" data-s="0" data-e="0.1">Formula Student</div>
+    <h2 class="section-title" data-fx="grow" data-from="0.3" data-blur="1" data-s="0" data-e="0.2">Team 1.618 — Team Golden Ratio</h2>
     <div class="team-wrap">
-      <div class="team-media reveal">
-        <img src="assets/img/race-action.gif" alt="Team 1.618 kart on a night shakedown run">
+      <div class="team-media" data-fx="grow" data-from="0.18" data-s="0.08" data-e="0.55">
+        <img src="assets/img/race-action.gif" alt="Team 1.618 kart on a night shakedown run" loading="lazy">
         <div class="team-media-cap">LIVE // Night shakedown run — Team 1.618 kart</div>
       </div>
-      <div class="team-copy reveal">
-        <p>As <strong>Powertrain Head</strong>, I sit at the intersection of the car's mechanical and
-          electrical systems — from chassis-level sensor integration to on-track components like the
-          quick-shifter. The team name is a nod to the golden ratio: everything on the car is there because
-          the numbers said it should be.</p>
-        <ul class="role-list">
-          <li>Own powertrain electrical systems end-to-end, from spec to on-track validation</li>
+      <div class="team-copy" data-fx="right" data-s="0.4" data-e="0.7">
+        <p>I'm now <strong>Team Principal</strong> (from November 2026), after serving as Media Head and,
+          before that, <strong>Powertrain Head</strong> — where I sat at the intersection of the car's
+          mechanical and electrical systems, from chassis-level sensor integration to on-track components
+          like the quick-shifter. The team name is a nod to the golden ratio: everything on the car is there
+          because the numbers said it should be.</p>
+        <ul class="role-list" data-stagger="0.62,0.95,up">
+          <li>As Powertrain Head, owned powertrain electrical systems end-to-end, from spec to on-track validation</li>
           <li>Designed and installed the quick-shift ignition-cut system now running on the car</li>
-          <li>Coordinate wiring, sensor placement, and diagnostics across the chassis</li>
-          <li>Bridge the mechanical and electronics sub-teams during build season</li>
+          <li>Coordinated wiring, sensor placement, and diagnostics across the chassis</li>
+          <li>Bridged the mechanical and electronics sub-teams during build season</li>
         </ul>
       </div>
     </div>
   </div>
+ </div></div>
 </section>
 
 <section id="cold-start" class="scroll-pin-wrap">
@@ -536,10 +627,9 @@
       <div class="pin-media" id="pinMedia">
         <video
           id="coldStartVideo"
-          muted
           loop
           playsinline
-          preload="auto">
+          preload="metadata">
           <source src="assets/video/cold-start.mp4" type="video/mp4">
           Your browser doesn't support embedded video.
         </video>
@@ -551,32 +641,34 @@
         <h2>Cold Start</h2>
         <p>Keep scrolling — turn your volume up</p>
       </div>
+      <div class="sound-hint" id="soundHint">🔊 Tap or press any key for sound</div>
     </div>
   </div>
 </section>
 
-<section id="gallery">
+<section id="gallery" class="scene" style="--len:240">
+ <div class="stage"><div class="stage-inner">
   <div class="container">
-    <div class="eyebrow">Gallery</div>
-    <h2 class="section-title reveal">On the Road, In the Garage</h2>
-    <div class="slideshow reveal">
+    <div class="eyebrow" data-fx="up" data-s="0" data-e="0.1">Gallery</div>
+    <h2 class="section-title" data-fx="grow" data-from="0.3" data-blur="1" data-s="0" data-e="0.2">On the Road, In the Garage</h2>
+    <div class="slideshow" data-fx="grow" data-from="0.2" data-s="0.08" data-e="0.65">
       <div class="slide-viewport" id="slideViewport">
         <div class="slide active"><img src="assets/img/01-workshop-build.jpg" alt="Team 1.618 chassis build in the workshop"><div class="slide-cap">Team 1.618 chassis build — workshop floor</div></div>
-        <div class="slide"><img src="assets/img/02-rider-portrait.jpg" alt="Kushagra with his motorcycle, desert route"><div class="slide-cap">Desert route, mid-ride stop</div></div>
-        <div class="slide"><img src="assets/img/03-highway-tourer.jpg" alt="Motorcycle on the open highway"><div class="slide-cap">Open highway, cruising speed</div></div>
-        <div class="slide"><img src="assets/img/04-sunset-ride.jpg" alt="Motorcycle at sunset"><div class="slide-cap">Golden hour, tank bag packed</div></div>
-        <div class="slide"><img src="assets/img/05-desert-nightstop.jpg" alt="Motorcycle parked at night in the desert"><div class="slide-cap">Night stop, desert highway</div></div>
-        <div class="slide"><img src="assets/img/06-cruiser-parked.jpg" alt="Cruiser motorcycle parked on campus"><div class="slide-cap">Weekend cruiser, campus parking</div></div>
-        <div class="slide"><img src="assets/img/07-moonrise-cars.jpg" alt="Cars parked under a moonrise"><div class="slide-cap">Moonrise over the highway</div></div>
-        <div class="slide"><img src="assets/img/08-sedan-street.jpg" alt="Sedan parked on a tree-lined street"><div class="slide-cap">Tree-lined street, quiet afternoon</div></div>
-        <div class="slide"><img src="assets/img/09-rider-standing-desert.jpg" alt="Rider standing with motorcycle, desert sunset backdrop"><div class="slide-cap">Golden hour, rider on the move</div></div>
-        <div class="slide"><img src="assets/img/10-victory-pose-dirt-track.jpg" alt="Rider raising arms in celebration beside motorcycle on dirt road"><div class="slide-cap">Arms up, dirt track victory</div></div>
-        <div class="slide"><img src="assets/img/11-trailside-rest-stop.jpg" alt="Rider resting on the ground beside parked motorcycle"><div class="slide-cap">Trailside rest, boots in the dust</div></div>
-        <div class="slide"><img src="assets/img/12-highway-shoulder-noon.jpg" alt="Motorcycle parked on highway shoulder in daylight"><div class="slide-cap">Highway shoulder, midday halt</div></div>
-        <div class="slide"><img src="assets/img/13-dashboard-speedometer.jpg" alt="Close-up of car speedometer and dashboard display"><div class="slide-cap">Dashboard readout, mid-drive</div></div>
-        <div class="slide"><img src="assets/img/14-engine-teardown-workshop.jpg" alt="Disassembled motorcycle engine and chassis on workshop floor"><div class="slide-cap">Engine teardown, workshop floor</div></div>
-        <div class="slide"><img src="assets/img/15-night-halt-desert-road.jpg" alt="Motorcycle parked on desert road at night"><div class="slide-cap">Night halt, desert highway</div></div>
-        <div class="slide"><img src="assets/img/16-copilot-dog-nightdrive.jpg" alt="Dog sitting in car with blue ambient dashboard lighting at night"><div class="slide-cap">Co-pilot on board, night drive</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/02-rider-portrait.jpg" alt="Kushagra with his motorcycle, desert route"><div class="slide-cap">Desert route, mid-ride stop</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/03-highway-tourer.jpg" alt="Motorcycle on the open highway"><div class="slide-cap">Open highway, cruising speed</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/04-sunset-ride.jpg" alt="Motorcycle at sunset"><div class="slide-cap">Golden hour, tank bag packed</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/05-desert-nightstop.jpg" alt="Motorcycle parked at night in the desert"><div class="slide-cap">Night stop, desert highway</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/06-cruiser-parked.jpg" alt="Cruiser motorcycle parked on campus"><div class="slide-cap">Weekend cruiser, campus parking</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/07-moonrise-cars.jpg" alt="Cars parked under a moonrise"><div class="slide-cap">Moonrise over the highway</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/08-sedan-street.jpg" alt="Sedan parked on a tree-lined street"><div class="slide-cap">Tree-lined street, quiet afternoon</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/09-rider-standing-desert.jpg" alt="Rider standing with motorcycle, desert sunset backdrop"><div class="slide-cap">Golden hour, rider on the move</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/10-victory-pose-dirt-track.jpg" alt="Rider raising arms in celebration beside motorcycle on dirt road"><div class="slide-cap">Arms up, dirt track victory</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/11-trailside-rest-stop.jpg" alt="Rider resting on the ground beside parked motorcycle"><div class="slide-cap">Trailside rest, boots in the dust</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/12-highway-shoulder-noon.jpg" alt="Motorcycle parked on highway shoulder in daylight"><div class="slide-cap">Highway shoulder, midday halt</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/13-dashboard-speedometer.jpg" alt="Close-up of car speedometer and dashboard display"><div class="slide-cap">Dashboard readout, mid-drive</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/14-engine-teardown-workshop.jpg" alt="Disassembled motorcycle engine and chassis on workshop floor"><div class="slide-cap">Engine teardown, workshop floor</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/15-night-halt-desert-road.jpg" alt="Motorcycle parked on desert road at night"><div class="slide-cap">Night halt, desert highway</div></div>
+        <div class="slide"><img loading="lazy" src="assets/img/16-copilot-dog-nightdrive.jpg" alt="Dog sitting in car with blue ambient dashboard lighting at night"><div class="slide-cap">Co-pilot on board, night drive</div></div>
       </div>
       <div class="slide-controls">
         <button class="slide-btn" id="prevBtn" aria-label="Previous photo">←</button>
@@ -585,14 +677,16 @@
       </div>
     </div>
   </div>
+ </div></div>
 </section>
 
-<section id="certifications">
+<section id="certifications" class="scene" style="--len:230">
+ <div class="stage"><div class="stage-inner">
   <div class="container">
-    <div class="eyebrow">Certifications & Activities</div>
-    <h2 class="section-title reveal">Beyond the Build</h2>
+    <div class="eyebrow" data-fx="up" data-s="0" data-e="0.1">Certifications & Activities</div>
+    <h2 class="section-title" data-fx="grow" data-from="0.3" data-blur="1" data-s="0" data-e="0.2">Beyond the Build</h2>
     <div class="cert-grid">
-      <ul class="cert-list reveal">
+      <ul class="cert-list" data-stagger="0.12,0.65,left">
         <li>Data Science & Analytics <span class="date mono">2025</span></li>
         <li>Data Wrangling <span class="date mono">2025</span></li>
         <li>JavaScript <span class="date mono">2025</span></li>
@@ -601,7 +695,15 @@
         <li>Data Visualization using Excel <span class="date mono">2025</span></li>
         <li>Web Scraping <span class="date mono">2025</span></li>
       </ul>
-      <div class="reveal">
+      <div data-stagger="0.4,0.85,right">
+        <div class="activity-item">
+          <h4>Team Principal — Team 1.618 (Team Golden Ratio)</h4>
+          <span>Nov 2026 – Present</span>
+        </div>
+        <div class="activity-item">
+          <h4>Media Head — Team 1.618 (Team Golden Ratio)</h4>
+          <span>Aug 2026 – Nov 2026</span>
+        </div>
         <div class="activity-item">
           <h4>Powertrain Head — Team 1.618 (Team Golden Ratio)</h4>
           <span>Jun 2025 – Aug 2026</span>
@@ -613,22 +715,23 @@
       </div>
     </div>
   </div>
+ </div></div>
 </section>
 
-<section id="contact">
-  <div class="contact-wrap reveal">
-    <div class="eyebrow" style="justify-content:center;">Contact</div>
-    <h2>Let's talk cars, code, or both.</h2>
-    <p>Open to roles and collaborations across automotive electronics, powertrain systems, and embedded
+<section id="contact" class="scene" style="--len:190">
+ <div class="stage"><div class="stage-inner">
+  <div class="contact-wrap">
+    <div class="eyebrow" style="justify-content:center;" data-fx="up" data-s="0" data-e="0.12">Contact</div>
+    <h2 data-fx="zoom" data-from="2.6" data-blur="1" data-s="0.02" data-e="0.4">Let's talk cars, code, or both.</h2>
+    <p data-fx="up" data-s="0.3" data-e="0.55">Open to roles and collaborations across automotive electronics, powertrain systems, and embedded
       builds.</p>
-    <div class="contact-links">
+    <div class="contact-links" data-stagger="0.5,0.9,up">
       <a href="mailto:maverik2004@outlook.com" class="btn btn-primary">Email Me</a>
-      <a href="tel:+918401043320" class="btn btn-ghost">Call / WhatsApp</a>
       <a href="https://github.com/Ghost3019" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
       <a href="https://www.linkedin.com/in/kushagra-lal-9a0019136/" class="btn btn-ghost" target="_blank" rel="noopener">LinkedIn</a>
-
     </div>
   </div>
+ </div></div>
 </section>
 
 <footer>Kushagra Lal — built for the road ahead.</footer>
@@ -637,8 +740,12 @@
   // mobile menu
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+  function setMenu(open){
+    mobileMenu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  hamburger.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 
   // gauge ticks
   const ticksGroup = document.getElementById('ticks');
@@ -669,6 +776,7 @@
   slides.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to photo ' + (i + 1));
     dot.addEventListener('click', () => goTo(i));
     dotsWrap.appendChild(dot);
   });
@@ -682,10 +790,21 @@
   }
   document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
   document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
-  let autoplay = setInterval(() => goTo(current + 1), 4500);
+
+  // autoplay: pauses on hover, on touch, and while the tab is hidden
+  let autoplay = null;
+  function stopAuto(){ clearInterval(autoplay); autoplay = null; }
+  function startAuto(){
+    stopAuto();
+    if (!document.hidden) autoplay = setInterval(() => goTo(current + 1), 4500);
+  }
   const slideshowEl = document.querySelector('.slideshow');
-  slideshowEl.addEventListener('mouseenter', () => clearInterval(autoplay));
-  slideshowEl.addEventListener('mouseleave', () => { autoplay = setInterval(() => goTo(current + 1), 4500); });
+  slideshowEl.addEventListener('mouseenter', stopAuto);
+  slideshowEl.addEventListener('mouseleave', startAuto);
+  slideshowEl.addEventListener('touchstart', stopAuto, { passive: true });
+  slideshowEl.addEventListener('touchend', startAuto, { passive: true });
+  document.addEventListener('visibilitychange', () => { document.hidden ? stopAuto() : startAuto(); });
+  startAuto();
 
   // ===== COLD START — SCROLL-PINNED GROW ANIMATION =====
   (function(){
@@ -753,23 +872,236 @@
     update();
 
     // Autoplay the video (muted) once the section scrolls into view; pause when out of view.
+    // Sound is ON by default. Browsers only allow sound autoplay after the visitor has
+    // interacted with the page (click / tap / key press — scrolling alone doesn't count).
+    // So: try with sound; if the browser refuses, start muted and switch the sound on at the
+    // visitor's first click / tap / key press.
+    const hint = document.getElementById('soundHint');
+    let wantSound = true, inView = false;
+
+    function syncUI(){
+      soundBtn.textContent = video.muted ? '🔇' : '🔊';
+      if (hint) hint.classList.toggle('show', inView && wantSound && video.muted);
+    }
+    function startPlayback(){
+      video.muted = !wantSound;
+      const pr = video.play();
+      if (pr && pr.catch) pr.catch(() => {
+        video.muted = true;               // blocked: fall back to silent autoplay
+        video.play().catch(() => {});
+        syncUI();
+      });
+      syncUI();
+    }
+
     const playIO = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
+        inView = e.isIntersecting;
+        if (inView) { startPlayback(); } else { video.pause(); syncUI(); }
       });
     }, { threshold: 0.15 });
     playIO.observe(spacer);
 
-    soundBtn.addEventListener('click', () => {
-      userUnmuted = !userUnmuted;
-      video.muted = !userUnmuted;
-      soundBtn.textContent = userUnmuted ? '🔊' : '🔇';
-      if (userUnmuted) { video.play().catch(() => {}); }
+    // first real interaction unlocks sound
+    ['pointerdown','keydown','touchend','click'].forEach(ev => {
+      window.addEventListener(ev, () => {
+        if (!wantSound || !video.muted) return;
+        video.muted = false;
+        if (inView && video.paused) video.play().catch(() => { video.muted = true; syncUI(); });
+        syncUI();
+      }, { passive: true });
     });
+
+    soundBtn.addEventListener('click', () => {
+      if (video.muted) { wantSound = true; video.muted = false; video.play().catch(() => {}); }
+      else { wantSound = false; video.muted = true; }
+      syncUI();
+    });
+    video.addEventListener('volumechange', syncUI);
+  })();
+
+  // ===== SCROLL SCENE ENGINE =====
+  // Every .scene is a tall spacer with a sticky 100vh stage (desktop). Elements marked
+  // data-fx are scrubbed by scroll position: grow / zoom / left / right / up / outleft / outright.
+  //   data-s / data-e   start & end of the effect, as a fraction (0-1) of the scene's scroll length
+  //   data-from         starting scale for grow / zoom
+  //   data-blur         adds a focus-pull blur on the way in
+  //   data-stagger="start,end,fx[,from]" on a parent spreads the effect across its children
+  // Mobile / short screens fall back to the same effects tied to each element's own position
+  // (no pinning); prefers-reduced-motion turns everything off.
+  (function(){
+    const html = document.documentElement;
+    const mqPin = window.matchMedia('(min-width:901px) and (min-height:560px)');
+    const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const scenes = Array.from(document.querySelectorAll('.scene'));
+    const clamp = (v,a=0,b=1) => Math.min(b, Math.max(a, v));
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+    // expand data-stagger into per-child fx
+    document.querySelectorAll('[data-stagger]').forEach(parent => {
+      const [a,b,fx,from] = parent.dataset.stagger.split(',');
+      const A = parseFloat(a), B = parseFloat(b), kids = Array.from(parent.children), n = kids.length;
+      const dur = (B - A) * (n > 1 ? 0.45 : 1);
+      kids.forEach((k,i) => {
+        const st = n > 1 ? A + (B - A - dur) * i / (n - 1) : A;
+        k.dataset.fx = fx; k.dataset.s = st.toFixed(3); k.dataset.e = (st + dur).toFixed(3);
+        if (from) k.dataset.from = from;
+      });
+    });
+
+    const items = Array.from(document.querySelectorAll('[data-fx]')).map(el => ({
+      el, scene: el.closest('.scene'), fx: el.dataset.fx,
+      s: parseFloat(el.dataset.s || 0), e: parseFloat(el.dataset.e || 0.3),
+      from: parseFloat(el.dataset.from || (el.dataset.fx === 'zoom' ? 1.8 : 0.35)),
+      blur: !!el.dataset.blur, tgt: 0, cur: 0, docTop: 0, h: 1
+    }));
+    const stageInners = scenes.map(sc => ({ sc, inner: sc.querySelector('.stage-inner'), fit: 1, exitable: !sc.matches('#contact') }));
+
+    let mode = 'pin';
+    function setMode(){
+      mode = mqReduce.matches ? 'off' : (mqPin.matches ? 'pin' : 'flat');
+      html.classList.remove('fx-pin','fx-flat','fx-off');
+      html.classList.add('fx-' + mode);
+      measure();
+      requestRun();
+    }
+
+    function measure(){
+      // natural, untransformed positions / fit-to-screen scales
+      items.forEach(it => { it.el.style.transform = 'none'; it.el.style.opacity = ''; it.el.style.filter = ''; });
+      stageInners.forEach(o => { if (o.inner) o.inner.style.transform = 'none'; });
+      const sy = window.scrollY;
+      items.forEach(it => { const r = it.el.getBoundingClientRect(); it.docTop = r.top + sy; it.h = r.height; });
+      const avail = window.innerHeight - 100;
+      stageInners.forEach(o => {
+        if (!o.inner) return;
+        const h = o.inner.offsetHeight;
+        o.fit = (mode === 'pin' && h > 0) ? clamp(avail / h, 0.55, 1) : 1;
+      });
+      items.forEach(it => { it.cur = NaN; });
+    }
+
+    function sceneProgress(sc){
+      const r = sc.getBoundingClientRect();
+      const total = r.height - window.innerHeight;
+      return total > 0 ? clamp(-r.top / total) : 0;
+    }
+
+    function computeTargets(){
+      const vh = window.innerHeight, sy = window.scrollY;
+      if (mode === 'pin'){
+        const sp = new Map();
+        scenes.forEach(sc => sp.set(sc, sceneProgress(sc)));
+        items.forEach(it => {
+          const p = sp.get(it.scene) || 0;
+          it.tgt = clamp((p - it.s) / Math.max(0.001, it.e - it.s));
+        });
+        stageInners.forEach(o => {
+          if (!o.inner) return;
+          const p = sp.get(o.sc) || 0;
+          const x = o.exitable ? clamp((p - 0.93) / 0.07) : 0;
+          o.x = x;
+        });
+      } else if (mode === 'flat'){
+        items.forEach(it => {
+          const top = it.docTop - sy;
+          const raw = clamp((vh * 0.93 - top) / (vh * 0.42));
+          // "out" effects don't make sense without pinning: show them settled
+          it.tgt = (it.fx === 'outleft' || it.fx === 'outright') ? 0 : raw;
+        });
+      }
+    }
+
+    function renderItem(it){
+      const p = it.cur, t = easeOut(p), el = it.el;
+      let tr = '', op = 1, fl = '';
+      switch (it.fx){
+        case 'grow': case 'zoom': {
+          const sc = it.from + (1 - it.from) * t;
+          tr = 'scale(' + sc.toFixed(4) + ')'; op = clamp(p * 2.4);
+          if (it.blur) fl = 'blur(' + ((1 - t) * 10).toFixed(1) + 'px)';
+          break; }
+        case 'left':  tr = 'translate3d(' + (-24 * (1 - t)).toFixed(2) + 'vw,0,0)'; op = clamp(p * 2); break;
+        case 'right': tr = 'translate3d(' + (24 * (1 - t)).toFixed(2) + 'vw,0,0)'; op = clamp(p * 2); break;
+        case 'up':    tr = 'translate3d(0,' + (70 * (1 - t)).toFixed(1) + 'px,0)'; op = clamp(p * 2.2); break;
+        case 'outleft':  tr = 'translate3d(' + (-30 * p).toFixed(2) + 'vw,0,0) scale(' + (1 - 0.18 * p).toFixed(3) + ')'; op = 1 - clamp((p - 0.15) / 0.85); break;
+        case 'outright': tr = 'translate3d(' + (30 * p).toFixed(2) + 'vw,0,0) scale(' + (1 + 0.3 * p).toFixed(3) + ')'; op = 1 - clamp((p - 0.15) / 0.85); break;
+      }
+      const isOut = it.fx === 'outleft' || it.fx === 'outright';
+      const settled = isOut ? p <= 0 : p >= 1;
+      if (mode === 'off' || settled){ el.style.transform = ''; el.style.opacity = ''; el.style.filter = ''; return; }
+      el.style.transform = tr; el.style.opacity = op.toFixed(3); el.style.filter = fl;
+    }
+
+    let running = false, lastY = window.scrollY, vel = 0;
+    const progressBar = document.getElementById('scrollProgress');
+    const speed = document.getElementById('speed');
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+
+    function frame(){
+      computeTargets();
+      let moving = false;
+      items.forEach(it => {
+        if (mode === 'off'){ renderItem(it); return; }
+        if (Number.isNaN(it.cur)) it.cur = it.tgt;
+        const d = it.tgt - it.cur;
+        if (Math.abs(d) < 0.0008) it.cur = it.tgt; else { it.cur += d * 0.16; moving = true; }
+        renderItem(it);
+      });
+      stageInners.forEach(o => {
+        if (!o.inner) return;
+        if (mode !== 'pin'){ o.inner.style.transform = ''; o.inner.style.opacity = ''; return; }
+        const x = o.x || 0, scale = o.fit * (1 + 0.07 * x);
+        o.inner.style.transform = (scale === 1) ? '' : 'scale(' + scale.toFixed(4) + ')';
+        o.inner.style.opacity = x > 0 ? (1 - x).toFixed(3) : '';
+      });
+
+      // progress bar, speed streaks, nav highlight
+      const y = window.scrollY, docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (progressBar) progressBar.style.width = (docH > 0 ? y / docH * 100 : 0).toFixed(2) + '%';
+      vel += (Math.abs(y - lastY) - vel) * 0.2; lastY = y;
+      if (speed){
+        speed.style.opacity = mode === 'off' ? 0 : clamp((vel - 4) / 70, 0, 0.5).toFixed(3);
+        speed.style.setProperty('--sy', (y * 1.6 % 340).toFixed(1) + 'px');
+      }
+      const mid = window.innerHeight * 0.5; let activeId = '';
+      scenes.forEach(sc => { const r = sc.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) activeId = sc.id; });
+      const cs = document.getElementById('cold-start');
+      if (cs){ const r = cs.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) activeId = 'team'; }
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + activeId));
+
+      if (moving || vel > 0.5){ requestAnimationFrame(frame); } else { running = false; }
+    }
+    function requestRun(){ if (!running){ running = true; requestAnimationFrame(frame); } }
+
+    window.addEventListener('scroll', requestRun, { passive: true });
+    window.addEventListener('resize', () => { measure(); requestRun(); });
+    window.addEventListener('load', () => { measure(); requestRun(); });
+    if (mqPin.addEventListener){ mqPin.addEventListener('change', setMode); mqReduce.addEventListener('change', setMode); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); requestRun(); });
+
+    // nav / button anchors: land partway into a pinned scene so content is already visible
+    function goTo(id){
+      const target = document.getElementById(id);
+      if (!target) return;
+      let y = target.getBoundingClientRect().top + window.scrollY;
+      if (mode === 'pin' && target.classList.contains('scene') && id !== 'top'){
+        y += (target.offsetHeight - window.innerHeight) * (id === 'contact' ? 0.95 : 0.88);
+      } else if (id === 'top'){ y = 0; }
+      else if (id === 'cold-start'){ y += 0; }
+      window.scrollTo({ top: y, behavior: mqReduce.matches ? 'auto' : 'smooth' });
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        if (!id || !document.getElementById(id)) return;
+        e.preventDefault(); goTo(id);
+      });
+    });
+
+    setMode();
+    setTimeout(() => { measure(); requestRun(); }, 900);
+    if (location.hash) setTimeout(() => goTo(location.hash.slice(1)), 400);
   })();
 </script>
 </body>
