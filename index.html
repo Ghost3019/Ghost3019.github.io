@@ -194,24 +194,58 @@
   .team-media img{ width:100%; }
   .team-media-cap{ position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(0,0,0,0.85)); padding:24px 18px 14px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ev); letter-spacing:0.05em; }
 
-  /* ===== COLD START VIDEO ===== */
-  .video-card{ position:relative; border:1px solid var(--line); background:#000; max-width:520px; margin:0 auto; }
-  .video-card video{ width:100%; display:block; max-height:80vh; background:#000; }
-  .video-cap{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 18px; font-family:'JetBrains Mono',monospace; font-size:12px;
-    color:var(--ev); letter-spacing:0.05em; border-top:1px solid var(--line);
-    background:var(--surface);
+  /* ===== COLD START — SCROLL-PINNED GROW ===== */
+  .scroll-pin-wrap{ position:relative; z-index:1; padding:0; }
+  .scroll-pin-spacer{ position:relative; height:280vh; }
+  .scroll-pin-sticky{
+    position:sticky; top:0; height:100vh; width:100%; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--bg);
   }
-  .video-cap .rec-dot{
-    width:8px; height:8px; border-radius:50%; background:var(--ice); display:inline-block;
-    margin-right:8px; box-shadow:0 0 0 0 rgba(255,0,127,.6); animation:recPulse 1.6s infinite;
+  .pin-eyebrow-fixed{
+    position:absolute; top:90px; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
+    color:var(--ev); text-transform:uppercase; display:flex; align-items:center; gap:10px;
+    z-index:3; pointer-events:none;
   }
-  @keyframes recPulse{
-    0%{ box-shadow:0 0 0 0 rgba(255,0,127,.55); }
-    70%{ box-shadow:0 0 0 8px rgba(255,0,127,0); }
-    100%{ box-shadow:0 0 0 0 rgba(255,0,127,0); }
+  .pin-eyebrow-fixed::before{ content:''; width:24px; height:1px; background:var(--ev); display:inline-block; }
+  .pin-media{
+    position:relative;
+    width:min(640px,82vw);
+    aspect-ratio:16/9;
+    border-radius:20px;
+    overflow:hidden;
+    background:#000;
+    box-shadow:0 0 0 1px var(--line), 0 30px 90px rgba(0,0,0,0.6);
+    will-change:transform, border-radius;
+    transform-origin:center center;
+    z-index:2;
   }
+  .pin-media::after{
+    content:''; position:absolute; inset:0;
+    box-shadow:inset 0 0 0 1px rgba(255,0,127,0.25);
+    pointer-events:none;
+  }
+  .pin-media video{ width:100%; height:100%; object-fit:cover; display:block; }
+  .pin-caption{
+    position:absolute; left:50%; bottom:14%; transform:translateX(-50%);
+    text-align:center; z-index:3; pointer-events:none;
+  }
+  .pin-caption h2{ font-size:clamp(26px,4vw,40px); margin-bottom:8px; }
+  .pin-caption p{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ev); letter-spacing:0.1em; text-transform:uppercase; }
+  .sound-toggle{
+    position:absolute; bottom:16px; right:16px; z-index:4;
+    width:38px; height:38px; border-radius:50%; border:1px solid rgba(255,255,255,0.25);
+    background:rgba(10,11,13,0.55); backdrop-filter:blur(6px); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:15px; cursor:pointer;
+    transition:border-color .2s, background .2s;
+  }
+  .sound-toggle:hover{ border-color:var(--ice); }
+  .pin-progress-bar{
+    position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--line); z-index:4;
+  }
+  .pin-progress-fill{ height:100%; width:0%; background:var(--ice); }
+
   .team-copy p{ color:var(--muted); margin-bottom:16px; font-size:16px; }
   .role-list{ list-style:none; margin-top:22px; display:flex; flex-direction:column; gap:12px; }
   .role-list li{ display:flex; gap:12px; font-size:14.5px; color:var(--muted); }
@@ -260,6 +294,8 @@
     .nav-links, .nav-cta{ display:none; }
     .hamburger{ display:flex; }
     section{ padding:70px 6vw; }
+    .scroll-pin-spacer{ height:220vh; }
+    .pin-media{ width:88vw; }
   }
   .mobile-menu{
     position:fixed; top:70px; left:0; right:0; background:var(--bg); border-bottom:1px solid var(--line);
@@ -492,21 +528,28 @@
   </div>
 </section>
 
-<section id="cold-start">
-  <div class="container">
-    <div class="eyebrow">Sound Check</div>
-    <h2 class="section-title reveal">Cold Start</h2>
-    <div class="video-card reveal">
-      <video
-        controls
-        preload="auto"
-        playsinline>
-        <source src="assets/video/cold-start.mp4" type="video/mp4">
-        Your browser doesn't support embedded video.
-        <a href="assets/video/cold-start.mp4">Download the clip</a> instead.
-      </video>
-      <div class="video-cap">
-        <span><span class="rec-dot"></span>Cold start — turn your volume up</span>
+<section id="cold-start" class="scroll-pin-wrap">
+  <div class="scroll-pin-spacer" id="pinSpacer">
+    <div class="scroll-pin-sticky">
+      <div class="pin-eyebrow-fixed">Sound Check</div>
+
+      <div class="pin-media" id="pinMedia">
+        <video
+          id="coldStartVideo"
+          muted
+          loop
+          playsinline
+          preload="auto">
+          <source src="assets/video/cold-start.mp4" type="video/mp4">
+          Your browser doesn't support embedded video.
+        </video>
+        <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">🔇</button>
+        <div class="pin-progress-bar"><div class="pin-progress-fill" id="pinProgressFill"></div></div>
+      </div>
+
+      <div class="pin-caption" id="pinCaption">
+        <h2>Cold Start</h2>
+        <p>Keep scrolling — turn your volume up</p>
       </div>
     </div>
   </div>
@@ -643,6 +686,91 @@
   const slideshowEl = document.querySelector('.slideshow');
   slideshowEl.addEventListener('mouseenter', () => clearInterval(autoplay));
   slideshowEl.addEventListener('mouseleave', () => { autoplay = setInterval(() => goTo(current + 1), 4500); });
+
+  // ===== COLD START — SCROLL-PINNED GROW ANIMATION =====
+  (function(){
+    const spacer   = document.getElementById('pinSpacer');
+    const media    = document.getElementById('pinMedia');
+    const caption  = document.getElementById('pinCaption');
+    const video    = document.getElementById('coldStartVideo');
+    const soundBtn = document.getElementById('soundToggle');
+    const fill     = document.getElementById('pinProgressFill');
+    if (!spacer || !media) return;
+
+    let baseW = 0, baseH = 0, targetScale = 1;
+    let ticking = false;
+    let userUnmuted = false;
+
+    function measureBase(){
+      // Measure the media box at its natural (unscaled) size.
+      media.style.transform = 'scale(1)';
+      const r = media.getBoundingClientRect();
+      baseW = r.width;
+      baseH = r.height;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      // Scale enough to cover the full viewport, with a small overshoot.
+      targetScale = Math.max(vw / baseW, vh / baseH) * 1.04;
+    }
+
+    function update(){
+      ticking = false;
+      const rect = spacer.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const scrollable = rect.height - vh;
+      let progress = 0;
+      if (scrollable > 0) {
+        progress = (-rect.top) / scrollable;
+      }
+      progress = Math.max(0, Math.min(1, progress));
+
+      const scale = 1 + (targetScale - 1) * progress;
+      const radius = 20 * (1 - progress);
+      media.style.transform = 'scale(' + scale.toFixed(4) + ')';
+      media.style.borderRadius = radius.toFixed(1) + 'px';
+
+      const capOpacity = 1 - Math.min(1, progress / 0.22);
+      caption.style.opacity = Math.max(0, capOpacity).toFixed(2);
+      caption.style.transform = 'translate(-50%, ' + (-progress * 40).toFixed(1) + 'px)';
+
+      if (fill) fill.style.width = (progress * 100).toFixed(1) + '%';
+
+      // Fade the eyebrow label with the caption too
+      const eyebrow = document.querySelector('.pin-eyebrow-fixed');
+      if (eyebrow) eyebrow.style.opacity = Math.max(0, capOpacity).toFixed(2);
+    }
+
+    function onScroll(){
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { measureBase(); update(); });
+    measureBase();
+    update();
+
+    // Autoplay the video (muted) once the section scrolls into view; pause when out of view.
+    const playIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.15 });
+    playIO.observe(spacer);
+
+    soundBtn.addEventListener('click', () => {
+      userUnmuted = !userUnmuted;
+      video.muted = !userUnmuted;
+      soundBtn.textContent = userUnmuted ? '🔊' : '🔇';
+      if (userUnmuted) { video.play().catch(() => {}); }
+    });
+  })();
 </script>
 </body>
 </html>
